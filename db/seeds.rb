@@ -37,7 +37,6 @@ student1 = Student.new({
   'first_name' => 'Harry',
   'last_name' => 'Potter',
   'age' => 17,
-  'house' => 'Gryffindor',
   'house_id' => house1.id()
    })
 
@@ -47,7 +46,6 @@ student2 = Student.new({
   'first_name' => 'Draco',
   'last_name' => 'Malfoy',
   'age' => 17,
-  'house' => 'Slytherin',
   'house_id' => house3.id
   })
 
@@ -57,7 +55,6 @@ student2 = Student.new({
     'first_name' => 'Luna',
     'last_name' => 'Lovegood',
     'age' => 16,
-    'house' => 'Ravenclaw',
     'house_id' => house2.id
     })
 
@@ -67,8 +64,7 @@ student2 = Student.new({
     student4 = Student.new({
       'first_name' => 'Cedric',
       'last_name' => 'Diggory',
-      'age' => 18,
-      'house' => 'Hufflepuff',
+      'age' => 18,,
       'house_id' => house4.id
       })
 
