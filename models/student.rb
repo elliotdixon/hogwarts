@@ -1,8 +1,10 @@
 require_relative('../db/sql_runner')
+require_relative('house')
+
 
 class Student
 
-  attr_reader :first_name, :last_name, :age, :house, :id
+  attr_reader :first_name, :last_name, :age, :house, :id, :house_id
 
   def initialize( options )
     @id = options['id'].to_i()
@@ -10,6 +12,7 @@ class Student
     @last_name = options['last_name']
     @age = options['age']
     @house = options['house']
+    @house_id = options['house_id'].to_i()
   end
 
   def pretty_name()
@@ -22,14 +25,15 @@ class Student
       first_name,
       last_name,
       age,
-      house
+      house,
+      house_id
     )
     VALUES
     (
-      $1, $2, $3, $4
+      $1, $2, $3, $4, $5
     )
     RETURNING *"
-    values = [@first_name, @last_name, @age, @house]
+    values = [@first_name, @last_name, @age, @house, @house_id]
     student_data = SqlRunner.run(sql, values)
     @id = student_data.first()['id'].to_i()
   end
@@ -50,6 +54,15 @@ class Student
         SqlRunner.run(sql, values)
   end
 
+  def get_house()
+    sql = "SELECT * FROM houses WHERE id = $1"
+    values = [@house_id]
+    results = SqlRunner.run(sql, values)
+    house_hash = results[0]
+    house = House.new(house_hash)
+    return house.name
+  end
+
   def self.all()
     sql= "SELECT * FROM students"
     students = SqlRunner.run(sql)
@@ -63,6 +76,11 @@ class Student
     student = SqlRunner.run(sql, values)
     result = Student.new( student.first)
     return result
+  end
+
+  def self.delete_all()
+    sql = "DELETE FROM students"
+    SqlRunner.run(sql)
   end
 
 end
